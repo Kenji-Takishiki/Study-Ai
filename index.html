@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>StudyAI — Learn smarter, not harder</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f7f7fb;color:#1a1a2e;}
+nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;background:#fff;border-bottom:1px solid #ececec;position:sticky;top:0;z-index:100;}
+.logo{font-size:22px;font-weight:700;color:#534AB7;}.logo span{color:#D85A30;}
+.btn-nav{background:#534AB7;color:#fff;border:none;padding:9px 22px;border-radius:20px;font-size:14px;font-weight:600;cursor:pointer;}
+.hero{text-align:center;padding:4rem 1.5rem 2.5rem;background:#fff;}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:#FAEEDA;color:#633806;font-size:13px;font-weight:600;padding:6px 16px;border-radius:20px;margin-bottom:1.5rem;}
+.dot{width:8px;height:8px;border-radius:50%;background:#EF9F27;display:inline-block;}
+.hero h1{font-size:48px;font-weight:800;line-height:1.1;margin-bottom:1.25rem;}
+.purple{color:#534AB7;}.coral{color:#D85A30;}
+.hero p{font-size:17px;color:#666;max-width:480px;margin:0 auto 2rem;line-height:1.7;}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-main{background:#534AB7;color:#fff;border:none;padding:14px 32px;border-radius:26px;font-size:15px;font-weight:700;cursor:pointer;}
+.btn-outline{background:transparent;color:#D85A30;border:2.5px solid #D85A30;padding:12px 28px;border-radius:26px;font-size:15px;font-weight:700;cursor:pointer;}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:2rem;max-width:600px;margin:0 auto;}
+.stat{text-align:center;background:#EEEDFE;border-radius:14px;padding:1.25rem;}
+.stat-num{font-size:26px;font-weight:800;color:#534AB7;}
+.stat-label{font-size:13px;color:#534AB7;margin-top:4px;font-weight:600;}
+.section-wrap{padding:3rem 2rem;}
+.section-title{text-align:center;font-size:28px;font-weight:800;margin-bottom:0.5rem;}
+.section-sub{text-align:center;font-size:15px;color:#888;margin-bottom:2rem;}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;max-width:900px;margin:0 auto;}
+.feat-card{border-radius:16px;padding:1.5rem 1.25rem;text-align:center;}
+.feat-card h3{font-size:15px;font-weight:700;margin-bottom:6px;}
+.feat-card p{font-size:13px;line-height:1.5;}
+.feat-icon{font-size:28px;margin-bottom:10px;}
+.tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem;}
+.tab{padding:10px 22px;border-radius:22px;font-size:14px;font-weight:700;cursor:pointer;border:2.5px solid transparent;}
+.tab-ai{background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;}
+.tab-flash{background:#FAEEDA;color:#633806;border-color:#EF9F27;}
+.tab-quiz{background:#E1F5EE;color:#085041;border-color:#5DCAA5;}
+.tab-game{background:#FAECE7;color:#712B13;border-color:#F0997B;}
+.tab.inactive{background:#f0f0f0;color:#aaa;border-color:#e0e0e0;}
+.panel{display:none;max-width:680px;margin:0 auto;background:#f7f7fb;border-radius:18px;padding:1.5rem;}
+.panel.active{display:block;}
+.chat-msgs{display:flex;flex-direction:column;gap:12px;margin-bottom:12px;min-height:180px;}
+.chat-row{display:flex;gap:10px;align-items:flex-start;}
+.chat-row.user{flex-direction:row-reverse;}
+.av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
+.av-ai{background:#EEEDFE;color:#3C3489;}.av-u{background:#FAEEDA;color:#633806;}
+.bubble{padding:11px 16px;border-radius:16px;font-size:14px;line-height:1.5;max-width:85%;}
+.bubble-ai{background:#fff;color:#1a1a2e;border:1px solid #ececec;}
+.bubble-u{background:#534AB7;color:#fff;}
+.chat-input-row{display:flex;gap:8px;}
+.chat-input-row input{flex:1;padding:11px 16px;border-radius:22px;border:1.5px solid #ddd;font-size:14px;background:#fff;outline:none;}
+.send-btn{background:#534AB7;color:#fff;border:none;padding:11px 22px;border-radius:22px;font-size:14px;font-weight:700;cursor:pointer;}
+.fc-wrap{perspective:700px;margin-bottom:12px;}
+.fc{height:160px;cursor:pointer;}
+.fc-inner{width:100%;height:100%;transition:transform 0.45s;transform-style:preserve-3d;position:relative;}
+.fc.flipped .fc-inner{transform:rotateY(180deg);}
+.fc-front,.fc-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem;text-align:center;}
+.fc-front{background:#EEEDFE;border:2px solid #AFA9EC;}
+.fc-back{background:#FAEEDA;border:2px solid #EF9F27;transform:rotateY(180deg);}
+.fc-label{font-size:11px;font-weight:700;letter-spacing:0.08em;margin-bottom:10px;text-transform:uppercase;}
+.fc-front .fc-label{color:#534AB7;}.fc-back .fc-label{color:#633806;}
+.fc-q{font-size:16px;font-weight:700;color:#26215C;}
+.fc-a{font-size:14px;color:#412402;line-height:1.5;}
+.fc-hint{font-size:12px;color:#aaa;text-align:center;margin-bottom:10px;}
+.fc-nav{display:flex;justify-content:space-between;align-items:center;}
+.fc-dots{display:flex;gap:6px;}
+.fc-dot{width:9px;height:9px;border-radius:50%;background:#ddd;}
+.fc-dot.on{background:#534AB7;}
+.fc-btn{padding:8px 20px;border-radius:18px;font-size:13px;font-weight:700;cursor:pointer;border:none;}
+.streak-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.streak-badge{background:#FAEEDA;color:#633806;font-size:13px;font-weight:700;padding:5px 14px;border-radius:12px;}
+.streak-bar-wrap{flex:1;height:7px;background:#ececec;border-radius:4px;}
+.streak-bar{height:7px;border-radius:4px;background:#EF9F27;width:40%;transition:width 0.3s;}
+.quiz-score-label{font-size:13px;font-weight:700;color:#534AB7;}
+.quiz-q-text{font-size:15px;font-weight:700;color:#1a1a2e;margin-bottom:14px;line-height:1.5;}
+.quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.qopt{padding:13px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;border:2.5px solid transparent;text-align:left;}
+.qopt.a{background:#EEEDFE;color:#26215C;border-color:#AFA9EC;}
+.qopt.b{background:#E1F5EE;color:#04342C;border-color:#5DCAA5;}
+.qopt.c{background:#FAEEDA;color:#412402;border-color:#EF9F27;}
+.qopt.d{background:#FAECE7;color:#4A1B0C;border-color:#F0997B;}
+.qopt.correct{background:#EAF3DE!important;border-color:#639922!important;color:#173404!important;}
+.qopt.wrong{background:#FCEBEB!important;border-color:#E24B4A!important;color:#501313!important;}
+.game-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.game-timer{background:#D85A30;color:#fff;font-size:20px;font-weight:800;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.game-pts{background:#EEEDFE;color:#3C3489;font-size:14px;font-weight:700;padding:8px 16px;border-radius:14px;}
+.game-q{font-size:15px;font-weight:700;color:#1a1a2e;text-align:center;margin-bottom:14px;line-height:1.5;}
+.game-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.game-opt{border-radius:14px;padding:1.1rem;text-align:center;font-size:14px;font-weight:700;cursor:pointer;color:#fff;min-height:68px;display:flex;align-items:center;justify-content:center;border:none;}
+.game-result{text-align:center;margin-top:14px;font-size:15px;font-weight:700;display:none;}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;max-width:700px;margin:0 auto;}
+.pc{background:#fff;border:1.5px solid #ececec;border-radius:18px;padding:1.5rem;}
+.pc.hot{border:2.5px solid #534AB7;}
+.pc-tag{background:#EEEDFE;color:#3C3489;font-size:12px;font-weight:700;padding:4px 12px;border-radius:12px;display:inline-block;margin-bottom:10px;}
+.pc h3{font-size:16px;font-weight:800;color:#1a1a2e;}
+.pc-price{font-size:32px;font-weight:800;color:#1a1a2e;margin:10px 0 4px;}
+.pc-per{font-size:13px;color:#aaa;margin-bottom:14px;}
+.pc-feat{font-size:13px;color:#555;padding:6px 0;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;gap:8px;}
+.pc-feat:last-child{border:none;}
+.check{width:16px;height:16px;border-radius:50%;background:#EAF3DE;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.check-inner{width:7px;height:7px;border-radius:50%;background:#639922;}
+.hl{background:#FAEEDA;color:#633806;font-weight:700;padding:2px 7px;border-radius:7px;font-size:12px;}
+.hl2{background:#E1F5EE;color:#085041;font-weight:700;padding:2px 7px;border-radius:7px;font-size:12px;}
+.cta-section{background:#534AB7;padding:3rem 2rem;text-align:center;}
+.cta-section h2{font-size:28px;font-weight:800;color:#fff;margin-bottom:10px;}
+.cta-section p{font-size:15px;color:rgba(255,255,255,0.85);margin-bottom:1.75rem;}
+.cta-section button{background:#fff;color:#534AB7;border:none;padding:14px 36px;border-radius:26px;font-size:15px;font-weight:800;cursor:pointer;}
+footer{text-align:center;padding:1.5rem;font-size:13px;color:#aaa;background:#fff;border-top:1px solid #ececec;}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">study<span>AI</span></div>
+  <div style="display:flex;gap:12px;align-items:center;">
+    <a style="font-size:14px;color:#555;cursor:pointer;">Login</a>
+    <button class="btn-nav">Sign up free</button>
+  </div>
+</nav>
+<div class="hero">
+  <div class="hero-badge"><span class="dot"></span> AI-powered studying — actually fun</div>
+  <h1>Learn faster.<br><span class="purple">Score higher.</span><br><span class="coral">Have a blast.</span></h1>
+  <p>Your AI study buddy that chats, summarizes, makes flashcards, quizzes you, and challenges your friends — all in one place.</p>
+  <div class="hero-btns">
+    <button class="btn-main" onclick="document.getElementById('app').scrollIntoView({behavior:'smooth'})">Start studying free</button>
+    <button class="btn-outline" onclick="document.getElementById('app').scrollIntoView({behavior:'smooth'})">See it in action</button>
+  </div>
+</div>
+<div class="stats">
+  <div class="stat"><div class="stat-num">10x</div><div class="stat-label">Faster learning</div></div>
+  <div class="stat"><div class="stat-num">94%</div><div class="stat-label">Better grades</div></div>
+  <div class="stat"><div class="stat-num">Free</div><div class="stat-label">To start</div></div>
+</div>
+<div class="section-wrap" style="background:#f7f7fb;">
+  <div class="section-title">Everything you need to ace it</div>
+  <div class="section-sub">Five powerful tools in one fun app</div>
+  <div class="features-grid">
+    <div class="feat-card" style="background:#EEEDFE;"><div class="feat-icon">🤖</div><h3 style="color:#26215C;">AI tutor</h3><p style="color:#534AB7;">Ask anything, get clear instant explanations</p></div>
+    <div class="feat-card" style="background:#FAEEDA;"><div class="feat-icon">📄</div><h3 style="color:#412402;">Summarizer</h3><p style="color:#633806;">Paste notes, get a clean summary fast</p></div>
+    <div class="feat-card" style="background:#E1F5EE;"><div class="feat-icon">🃏</div><h3 style="color:#04342C;">Flashcards</h3><p style="color:#0F6E56;">Auto-generated from your own content</p></div>
+    <div class="feat-card" style="background:#FAECE7;"><div class="feat-icon">📝</div><h3 style="color:#4A1B0C;">Smart quiz</h3><p style="color:#712B13;">Adapts to what you struggle with most</p></div>
+    <div class="feat-card" style="background:#FBEAF0;"><div class="feat-icon">🎮</div><h3 style="color:#4B1528;">Game mode</h3><p style="color:#72243E;">Kahoot-style battles with friends</p></div>
+  </div>
+</div>
+<div class="section-wrap" style="background:#fff;" id="app">
+  <div class="section-title">Try it yourself</div>
+  <div class="section-sub">Click any mode below</div>
+  <div class="tabs">
+    <button class="tab tab-ai" id="tab-ai" onclick="switchTab('ai')">🤖 AI tutor</button>
+    <button class="tab tab-flash inactive" id="tab-flash" onclick="switchTab('flash')">🃏 Flashcards</button>
+    <button class="tab tab-quiz inactive" id="tab-quiz" onclick="switchTab('quiz')">📝 Smart quiz</button>
+    <button class="tab tab-game inactive" id="tab-game" onclick="switchTab('game')">🎮 Game mode</button>
+  </div>
+  <div class="panel active" id="panel-ai">
+    <div class="chat-msgs" id="chat-msgs">
+      <div class="chat-row"><div class="av av-ai">AI</div><div class="bubble bubble-ai">Hey! I'm your StudyAI tutor. Ask me anything — any subject, any level! 🎯</div></div>
+      <div class="chat-row user"><div class="av av-u">U</div><div class="bubble bubble-u">Explain Newton's 3rd law simply</div></div>
+      <div class="chat-row"><div class="av av-ai">AI</div><div class="bubble bubble-ai">Every action has an equal and opposite reaction! 🚀 When you push a wall, it pushes back just as hard. Want flashcards on this?</div></div>
+    </div>
+    <div class="chat-input-row">
+      <input type="text" id="chat-in" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter')sendChat()"/>
+      <button class="send-btn" onclick="sendChat()">Send</button>
+    </div>
+  </div>
+  <div class="panel" id="panel-flash">
+    <div class="fc-hint">Tap the card to flip it!</div>
+    <div class="fc-wrap">
+      <div class="fc" id="fc" onclick="this.classList.toggle('flipped')">
+        <div class="fc-inner">
+          <div class="fc-front"><div class="fc-label">Question</div><div class="fc-q" id="fc-q">What is Newton's 3rd Law?</div></div>
+          <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a" id="fc-a">Every action has an equal and opposite reaction.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-nav">
+      <button class="fc-btn" style="background:#EEEDFE;color:#26215C;" onclick="prevCard()">← Prev</button>
+      <div class="fc-dots" id="fc-dots"></div>
+      <button class="fc-btn" style="background:#534AB7;color:#fff;" onclick="nextCard()">Next →</button>
+    </div>
+  </div>
+  <div class="panel" id="panel-quiz">
+    <div class="streak-row">
+      <div class="streak-badge" id="streak-badge">🔥 Streak: 2</div>
+      <div class="streak-bar-wrap"><div class="streak-bar" id="streak-bar"></div></div>
+      <div class="quiz-score-label" id="quiz-score">Score: 200</div>
+    </div>
+    <div class="quiz-q-text">Which best describes Newton's 3rd Law?</div>
+    <div class="quiz-opts">
+      <button class="qopt a" onclick="checkQ(this,false)">Objects stay at rest unless acted on</button>
+      <button class="qopt b" onclick="checkQ(this,true)">Every action has an equal, opposite reaction</button>
+      <button class="qopt c" onclick="checkQ(this,false)">Force equals mass times acceleration</button>
+      <button class="qopt d" onclick="checkQ(this,false)">Energy cannot be created or destroyed</button>
+    </div>
+  </div>
+  <div class="panel" id="panel-game">
+    <div class="game-header">
+      <div style="font-size:14px;font-weight:700;">Round 1 of 5</div>
+      <div class="game-timer" id="g-timer">12</div>
+      <div class="game-pts" id="g-pts">750 pts</div>
+    </div>
+    <div class="game-q">What force keeps planets orbiting the sun?</div>
+    <div class="game-grid">
+      <button class="game-opt" style="background:#185FA5;" onclick="gameAnswer(this,false)">Magnetism</button>
+      <button class="game-opt" style="background:#3B6D11;" onclick="gameAnswer(this,true)">Gravity</button>
+      <button class="game-opt" style="background:#993C1D;" onclick="gameAnswer(this,false)">Friction</button>
+      <button class="game-opt" style="background:#854F0B;" onclick="gameAnswer(this,false)">Centrifugal force</button>
+    </div>
+    <div class="game-result" id="game-result"></div>
+  </div>
+</div>
+<div class="section-wrap" style="background:#f7f7fb;">
+  <div class="section-title">Simple pricing</div>
+  <div class="section-sub">Start free, upgrade when you're ready</div>
+  <div class="pricing-grid">
+    <div class="pc">
+      <h3>Free</h3><div class="pc-price">$0</div><div class="pc-per">forever</div>
+      <div class="pc-feat"><div class="check"><div class="check-inner"></div></div>AI chat <span class="hl">50/day</span></div>
+      <div class="pc-feat"><div class="check"><div class="check-inner"></div></div>Basic flashcards</div>
+      <div class="pc-feat"><div class="check"><div class="check-inner"></div></div>Quizzes <span class="hl2">7/month</span></div>
+    </div>
+    <div class="pc hot">
+      <div class="pc-tag">⭐ Most popular</div>
+      <h3>Pro</h3><div class="pc-price">$9</div><div class="pc-per">per month</div>
+      <div class="pc-feat"><div class="check"><div class="check-inner"></div></div>Unlimited AI chat</div>
+      <div class="pc-feat"><div class="check"><div class="check-inner"></div></div>Smart flashcards</div>
+      <div class="pc-feat"><div class="check"><div class="check-inner"></div></div>Unlimited quizzes</div>
+      <div class="pc-feat"><div class="check"><div class="check-inner"></div></div>Game mode</div>
+    </div>
+    <div class="pc">
+      <h3>School</h3><div class="pc-price">$99</div><div class="pc-per">per month</div>
+      <div class="pc-feat"><div class="check"><div class="check-inner"></div></div>50 students</div>
+      <div class="pc-feat"><div class="check"><div class="check-inner"></div></div>Teacher dashboard</div>
+      <div class="pc-feat"><div class="check"><div class="check-inner"></div></div>Progress reports</div>
+      <div class="pc-feat"><div class="check"><div class="check-inner"></div></div>Priority support</div>
+    </div>
+  </div>
+</div>
+<div class="cta-section">
+  <h2>Ready to ace your next exam?</h2>
+  <p>Join thousands of students studying smarter with AI</p>
+  <button onclick="window.scrollTo({top:0,behavior:'smooth'})">Get started free 🚀</button>
+</div>
+<footer>© 2026 StudyAI — Made with ❤️ for students everywhere</footer>
+<script>
+const cards=[
+  {q:"What is Newton's 3rd Law?",a:"Every action has an equal and opposite reaction."},
+  {q:"What is photosynthesis?",a:"Plants convert sunlight, water and CO₂ into glucose and oxygen."},
+  {q:"What is osmosis?",a:"Movement of water through a semi-permeable membrane from low to high concentration."},
+  {q:"What is the speed of light?",a:"Approximately 299,792,458 metres per second in a vacuum."}
+];
+let ci=0,streak=2,score=200,gTime=12,gInterval;
+function buildDots(){const d=document.getElementById('fc-dots');d.innerHTML='';cards.forEach((_,i)=>{const el=document.createElement('div');el.className='fc-dot'+(i===ci?' on':'');d.appendChild(el);});}
+buildDots();
+function showCard(){document.getElementById('fc').classList.remove('flipped');document.getElementById('fc-q').textContent=cards[ci].q;document.getElementById('fc-a').textContent=cards[ci].a;buildDots();}
+function nextCard(){ci=(ci+1)%cards.length;showCard();}
+function prevCard(){ci=(ci-1+cards.length)%cards.length;showCard();}
+function switchTab(name){['ai','flash','quiz','game'].forEach(t=>{document.getElementById('panel-'+t).classList.remove('active');document.getElementById('tab-'+t).classList.add('inactive');});document.getElementById('panel-'+name).classList.add('active');document.getElementById('tab-'+name).classList.remove('inactive');if(name==='game')startGameTimer();else clearInterval(gInterval);}
+function checkQ(el,correct){document.querySelectorAll('.qopt').forEach(o=>o.disabled=true);el.classList.add(correct?'correct':'wrong');if(correct){streak++;score+=100;document.getElementById('streak-badge').textContent='🔥 Streak: '+streak;document.getElementById('quiz-score').textContent='Score: '+score;document.getElementById('streak-bar').style.width=Math.min(streak*15,100)+'%';}else{streak=0;document.getElementById('streak-badge').textContent='Streak: 0';document.querySelector('.qopt.b').classList.add('correct');}}
+function startGameTimer(){clearInterval(gInterval);gTime=12;document.getElementById('g-timer').textContent=gTime;gInterval=setInterval(()=>{gTime--;document.getElementById('g-timer').textContent=gTime;if(gTime<=0){clearInterval(gInterval);document.getElementById('g-timer').textContent='⏱';}},1000);}
+function gameAnswer(el,correct){clearInterval(gInterval);document.querySelectorAll('.game-opt').forEach(o=>{o.disabled=true;o.style.opacity='0.4';});el.style.opacity='1';el.style.outline=correct?'4px solid #97C459':'4px solid #F09595';const res=document.getElementById('game-result');res.style.display='block';if(correct){const bonus=Math.round(gTime*60);res.style.color='#534AB7';res.textContent='✅ Correct! +'+(750+bonus)+' points!';document.getElementById('g-pts').textContent=(750+bonus)+' pts';}else{res.style.color='#A32D2D';res.textContent='❌ Not quite! The answer was Gravity.';}}
+const responses=["Great question! Here's the simple version...","Love that! The key idea here is...","You're on a roll! Let me break that down...","Excellent topic! Here's what you need to know..."];
+let ri=0;
+function sendChat(){const inp=document.getElementById('chat-in');const val=inp.value.trim();if(!val)return;const msgs=document.getElementById('chat-msgs');const uRow=document.createElement('div');uRow.className='chat-row user';uRow.innerHTML='<div class="av av-u">U</div><div class="bubble bubble-u">'+val+'</div>';msgs.appendChild(uRow);inp.value='';setTimeout(()=>{const aRow=document.createElement('div');aRow.className='chat-row';aRow.innerHTML='<div class="av av-ai">AI</div><div class="bubble bubble-ai">'+responses[ri%responses.length]+' Want flashcards on this? 🃏</div>';msgs.appendChild(aRow);msgs.scrollTop=msgs.scrollHeight;ri++;},700);}
+</script>
+</body>
+</html>
